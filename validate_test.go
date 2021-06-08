@@ -370,6 +370,37 @@ var validationTestCases = []validationTestCase{
 			},
 		},
 	},
+	{
+		description: "email fail",
+		data: struct {
+			EmailValid  string `binding:"Email"`
+			EmailFail   string `binding:"Email"`
+			EmailFail2  string `binding:"Email"`
+			EmailFail3  string `binding:"Email"`
+		} {
+			EmailValid: "123@asd.com",
+			EmailFail:  "test 123@asd.com",
+			EmailFail2: "123@asd.com test",
+			EmailFail3: "test 123@asd.com test",
+		},
+		expectedErrors: Errors{
+			Error{
+				FieldNames:     []string{"EmailFail"},
+				Classification: ERR_EMAIL,
+				Message:        "Email",
+			},
+			Error{
+				FieldNames:     []string{"EmailFail2"},
+				Classification: ERR_EMAIL,
+				Message:        "Email",
+			},
+			Error{
+				FieldNames:     []string{"EmailFail3"},
+				Classification: ERR_EMAIL,
+				Message:        "Email",
+			},
+		},
+	},
 }
 
 func Test_Validation(t *testing.T) {

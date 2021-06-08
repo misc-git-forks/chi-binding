@@ -231,9 +231,9 @@ func Validate(req *http.Request, obj interface{}) Errors {
 }
 
 var (
-	AlphaDashPattern    = regexp.MustCompile("[^\\d\\w-_]")
-	AlphaDashDotPattern = regexp.MustCompile("[^\\d\\w-_\\.]")
-	EmailPattern        = regexp.MustCompile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[a-zA-Z0-9](?:[\\w-]*[\\w])?")
+	AlphaDashPattern    = regexp.MustCompile(`[^\d\w-_]`)
+	AlphaDashDotPattern = regexp.MustCompile(`[^\d\w-_\.]`)
+	EmailPattern        = regexp.MustCompile(`\A[\w!#$%&'*+/=?^_`+"`"+`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`+"`"+`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[a-zA-Z0-9](?:[\w-]*[\w])?\z`)
 )
 
 // Copied from github.com/asaskevich/govalidator.
@@ -248,7 +248,7 @@ var (
 	urlSubdomainRx = `((www\.)|([a-zA-Z0-9]([-\.][-\._a-zA-Z0-9]+)*))`
 	urlPortRx      = `(:(\d{1,5}))`
 	urlPathRx      = `((\/|\?|#)[^\s]*)`
-	URLPattern     = regexp.MustCompile(`^` + urlSchemaRx + `?` + urlUsernameRx + `?` + `((` + urlIPRx + `|(\[` + ipRx + `\])|(([a-zA-Z0-9]([a-zA-Z0-9-_]+)?[a-zA-Z0-9]([-\.][a-zA-Z0-9]+)*)|(` + urlSubdomainRx + `?))?(([a-zA-Z\x{00a1}-\x{ffff}0-9]+-?-?)*[a-zA-Z\x{00a1}-\x{ffff}0-9]+)(?:\.([a-zA-Z\x{00a1}-\x{ffff}]{1,}))?))\.?` + urlPortRx + `?` + urlPathRx + `?$`)
+	URLPattern     = regexp.MustCompile(`\A` + urlSchemaRx + `?` + urlUsernameRx + `?` + `((` + urlIPRx + `|(\[` + ipRx + `\])|(([a-zA-Z0-9]([a-zA-Z0-9-_]+)?[a-zA-Z0-9]([-\.][a-zA-Z0-9]+)*)|(` + urlSubdomainRx + `?))?(([a-zA-Z\x{00a1}-\x{ffff}0-9]+-?-?)*[a-zA-Z\x{00a1}-\x{ffff}0-9]+)(?:\.([a-zA-Z\x{00a1}-\x{ffff}]{1,}))?))\.?` + urlPortRx + `?` + urlPathRx + `?\z`)
 )
 
 // IsURL check if the string is an URL.
